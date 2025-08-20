@@ -1,0 +1,21 @@
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor configs / caches
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Python server cache (if using python3 -m http.server)
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# Build artifacts (Unity, Node, etc. if needed later)
+dist/
+build/
