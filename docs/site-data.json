@@ -1,0 +1,29 @@
+[
+  {
+    "name": "BracesNotebook",
+    "blurb": "<strong>Braces Notebook</strong> is an interactive Unity project where you can explore orthodontics in a playful way.\nYou’ll experiment with adding brackets and rubber bands to a tooth, and observe how it responds to the applied forces.",
+    "macUrl": "https://github.zhaw.ch/IMMERSE/BracesNotebook/releases/download/v1.0.0/BracesNotebookOSX.app.zip",
+    "winUrl": "https://github.zhaw.ch/IMMERSE/BracesNotebook/releases/download/v1.0.0/BracesNotebookWin.zip",
+    "web": "https://github.zhaw.ch/pages/IMMERSE/BracesNotebook/",
+    "repoUrl": "https://github.zhaw.ch/IMMERSE/BracesNotebook",
+    "demoGif": "assets/BracesNotebookDemo.gif"
+  },
+  {
+    "name": "AnimationRigging",
+    "blurb": "This Unity project demonstrates real-time body tracking and retargeting using Google's <strong>MediaPipe</strong> via the <a href=\"https://github.com/homuler/MediaPipeUnityPlugin\">homuler/MediaPipeUnityPlugin</a>.\nIt takes <strong>2D images, video, or live webcam input</strong> and estimates 3D body joint positions, which are then mapped to a <strong>standard Mixamo skeleton</strong> using Unity’s <strong>Animation Rigging</strong> system.",
+    "macUrl": "https://github.zhaw.ch/IMMERSE/AnimationRigging/releases/download/1.0.0/AnimationRiggingOSX.app.zip",
+    "winUrl": "https://github.zhaw.ch/IMMERSE/AnimationRigging/releases/download/1.0.0/AnimationRiggingWindows.zip",
+    "web": "",
+    "repoUrl": "https://github.zhaw.ch/IMMERSE/AnimationRigging",
+    "demoGif": "assets/AnimationRiggingDemo.gif"
+  },
+  {
+    "name": "HeartrateMonitor",
+    "blurb": "A Unity-based heart rate visualization app for <strong>Windows</strong> and <strong>macOS</strong>.  \nIt connects to <strong>Polar heart rate straps</strong> over Bluetooth Low Energy (BLE).",
+    "macUrl": "https://github.zhaw.ch/IMMERSE/HeartrateMonitor/releases/download/v1.0.0/HeartrateMonitorOSX.app.zip",
+    "winUrl": "https://github.zhaw.ch/IMMERSE/HeartrateMonitor/releases/download/v1.0.0/HeartrateMonitorWin.zip",
+    "web": "",
+    "repoUrl": "https://github.zhaw.ch/IMMERSE/HeartrateMonitor",
+    "demoGif": "assets/HeartrateMonitorDemo.gif"
+  }
+]

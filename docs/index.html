@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Projects</title>
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <style>
+    :root {
+      --fg: #111;
+      --muted: #666;
+      --bg: #c4d5e3;
+      --card: #fff;
+      --bd: #e5e5e5
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--fg);
+      background: var(--bg)
+    }
+
+    .wrap {
+      max-width: 960px;
+      margin: 48px auto;
+      padding: 0 16px
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--bd);
+      border-radius: 14px;
+      padding: 16px 18px
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 24px
+    }
+
+    h2 {
+      margin: 0 0 6px;
+      font-size: 18px
+    }
+
+    p {
+      margin: 0 0 10px;
+      color: var(--muted)
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    .btn {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--bd);
+      text-decoration: none;
+      color: var(--fg);
+      cursor: pointer;
+      background: transparent;
+    }
+
+    .btn:hover {
+      background: #f3f3f3
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>IMMERSE Projects</h1>
+    <div id="grid" class="grid"></div>
+  </div>
+  <script>
+    fetch("./site-data.json").then(r => r.json()).then(items => {
+      const g = document.getElementById("grid");
+      items.forEach(d => {
+        const el = document.createElement("section");
+        el.className = "card";
+
+        el.innerHTML = `
+           <div class="links">
+            <h2>${d.name}</h2>
+            ${d.demoGif ? `<button class="btn preview-toggle" data-src="${d.demoGif}">Preview</button>` : ""}
+          </div>
+          <div class="preview" style="margin:6px 0 10px; display:none"></div>
+          <p>${d.blurb || ""}</p>
+          <div class="links">
+            ${d.web ? `<a class="btn" href="${d.web}" target="_blank" rel="noopener">Web</a>` : ""}
+            ${d.macUrl ? `<a class="btn" href="${d.macUrl}" target="_blank" rel="noopener">Download macOS</a>` : ""}
+            ${d.winUrl ? `<a class="btn" href="${d.winUrl}" target="_blank" rel="noopener">Download Windows</a>` : ""}
+            ${d.repoUrl ? `<a class="btn" href="${d.repoUrl}" target="_blank" rel="noopener">Git</a>` : ""}
+          </div>
+        `;
+
+        // Add preview toggle logic
+        const btn = el.querySelector(".preview-toggle");
+        if (btn) {
+          btn.addEventListener("click", () => {
+            const previewDiv = el.querySelector(".preview");
+            if (previewDiv.style.display === "none") {
+              previewDiv.style.display = "block";
+              previewDiv.innerHTML = `<img src="${btn.dataset.src}" alt="${d.name} preview" style="max-width:100%; border-radius:10px; border:1px solid var(--bd)">`;
+              btn.textContent = "Hide";
+            } else {
+              previewDiv.style.display = "none";
+              previewDiv.innerHTML = "";
+              btn.textContent = "Preview";
+            }
+          });
+        }
+
+        g.appendChild(el);
+      });
+    }).catch(e => {
+      document.getElementById("grid").innerHTML = `<div class="card"><p>Failed to load data: ${e}</p></div>`;
+    });
+  </script>
+</body>
+
+</html>
