@@ -34,5 +34,14 @@
     "web": "",
     "repoUrl": "https://github.zhaw.ch/IMMERSE/VirtualCoEmbodimentFullBody",
     "demoGif": "assets/VirtualCoEmbodimentFullBodyDemo.gif"
+  },
+  {
+    "name": "VR_Hands_CoEmb",
+    "blurb": "Virtual Co-Embodiment (Hand Tracking) is a Unity project that enables a teacher and one or more students to connect and interact with shared hand models in real time using Oculus Quest hand tracking.",
+    "macUrl": "",
+    "winUrl": "",
+    "web": "",
+    "repoUrl": "https://github.zhaw.ch/IMMERSE/VR_Hands_CoEmb",
+    "demoGif": "assets/VR_Hands_CoEmbDemo.gif"
   }
 ]
