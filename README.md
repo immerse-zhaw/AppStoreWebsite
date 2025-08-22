@@ -2,6 +2,8 @@
 
 This website lists IMMERSE repositories with description, download links, and optional preview GIFs.
 
+[Click here to open the website](https://github.zhaw.ch/pages/IMMERSE/AppStoreWebsite/)
+
 ## How to Add a New Project
 
 1. **Edit `docs/projects.json`**
