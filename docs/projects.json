@@ -1,5 +1,6 @@
 [
   { "owner": "IMMERSE", "repo": "BracesNotebook", "web": "https://github.zhaw.ch/pages/IMMERSE/BracesNotebook/" },
   { "owner": "IMMERSE", "repo": "AnimationRigging"},
-  { "owner": "IMMERSE", "repo": "HeartrateMonitor"}
+  { "owner": "IMMERSE", "repo": "HeartrateMonitor"},
+  { "owner": "IMMERSE", "repo": "VirtualCoEmbodimentFullBody"}
 ]
