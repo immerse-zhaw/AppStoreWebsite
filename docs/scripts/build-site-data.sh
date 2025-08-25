@@ -105,6 +105,8 @@ build_items() {
     rel_json="$(gh_get "/repos/$owner/$repo/releases/latest" || true)"
     macUrl="$(jq -r '.assets[]?.browser_download_url | select(test("OSX|osx|Mac|mac|darwin|arm64|universal";"i"))' <<<"$rel_json" | head -n1)"
     winUrl="$(jq -r '.assets[]?.browser_download_url | select(test("Win|win|Windows|windows|x64|amd64";"i"))' <<<"$rel_json" | head -n1)"
+    androidUrl="$(jq -r '.assets[]?.browser_download_url | select(test("Android|android|apk|\\.apk$|\\.aab$";"i"))' <<<"$rel_json" | head -n1)"
+
     log "macUrl=${macUrl:-}"
     log "winUrl=${winUrl:-}"
 
@@ -125,10 +127,11 @@ build_items() {
       --arg blurb "$blurb" \
       --arg mac "$macUrl" \
       --arg win "$winUrl" \
+      --arg android "$androidUrl" \
       --arg web "$web" \
       --arg repo "$repoUrl" \
       --arg demo "$demoGif" \
-      '{name:$name, blurb:$blurb, macUrl:$mac, winUrl:$win, web:$web, repoUrl:$repo, demoGif:$demo}'
+      '{name:$name, blurb:$blurb, macUrl:$mac, winUrl:$win, androidUrl:$android, web:$web, repoUrl:$repo, demoGif:$demo}'
   done | jq -s '.'
 }
 
