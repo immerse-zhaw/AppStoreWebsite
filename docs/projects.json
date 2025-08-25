@@ -4,5 +4,6 @@
   { "owner": "IMMERSE", "repo": "HeartrateMonitor"},
   { "owner": "IMMERSE", "repo": "VirtualCoEmbodimentFullBody"},
   { "owner": "IMMERSE", "repo": "VR_Hands_CoEmb"},
-  { "owner": "IMMERSE", "repo": "AntExplorer", "web": "https://github.zhaw.ch/pages/IMMERSE/AntExplorer/" }
+  { "owner": "IMMERSE", "repo": "AntExplorer", "web": "https://github.zhaw.ch/pages/IMMERSE/AntExplorer/" },
+  { "owner": "IMMERSE", "repo": "3DViewer"}
 ]

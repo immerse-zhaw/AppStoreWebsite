@@ -58,5 +58,15 @@
     "web": "https://github.zhaw.ch/pages/IMMERSE/AntExplorer/",
     "repoUrl": "https://github.zhaw.ch/IMMERSE/AntExplorer",
     "demoGif": "assets/AntExplorerDemo.gif"
+  },
+  {
+    "name": "3DViewer",
+    "blurb": "This project demonstrates a simple 3D viewer in Unity with support for stereoscopic rendering. It can be used to explore models interactively and showcase stereo 3D.",
+    "macUrl": "",
+    "winUrl": "https://github.zhaw.ch/IMMERSE/3DViewer/releases/download/v1.0.0/3DViewerWin.zip",
+    "androidUrl": "",
+    "web": "",
+    "repoUrl": "https://github.zhaw.ch/IMMERSE/3DViewer",
+    "demoGif": "assets/3DViewerDemo.gif"
   }
 ]
