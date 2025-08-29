@@ -27,21 +27,137 @@
     }
 
     .wrap {
-      max-width: 960px;
-      margin: 48px auto;
-      padding: 0 16px
+      max-width: 100%;
+      margin: 48px 80px;
+      padding: 0
     }
 
     .grid {
       display: grid;
-      gap: 12px
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px
+    }
+
+    @media (max-width: 1200px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .card {
       background: var(--card);
       border: 1px solid var(--bd);
-      border-radius: 4px;
-      padding: 16px 18px
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 550px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .card-preview {
+      background: #6b7280;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      cursor: pointer;
+    }
+
+    .card-preview img.static {
+      filter: grayscale(20%) brightness(0.9);
+    }
+
+    .card-preview:hover img.static {
+      filter: none;
+    }
+
+    /* Modal overlay for full-size GIF viewing */
+    .gif-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .gif-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .gif-modal-content {
+      max-width: 80vw;
+      max-height: 80vh;
+      position: relative;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .gif-modal img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .gif-modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
+    }
+
+    .gif-modal-close:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    .card-content {
+      padding: 20px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-description {
+      flex: 1;
+      margin-bottom: 16px;
     }
 
     h1 {
@@ -51,8 +167,9 @@
     }
 
     h2 {
-      margin: 0 0 6px;
-      font-size: 18px
+      margin: 0 0 12px;
+      font-size: 22px;
+      font-weight: 600;
     }
 
     h3 {
@@ -62,24 +179,30 @@
     }
 
     p {
-      margin: 0 0 10px;
-      color: var(--muted)
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
     }
 
     .links {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px
+      gap: 8px;
+      margin-top: auto;
     }
 
     .btn {
-      padding: 8px 12px;
-      border-radius: 10px;
+      padding: 8px 14px;
+      border-radius: 8px;
       border: 1px solid var(--bd);
       text-decoration: none;
       color: var(--fg);
       cursor: pointer;
       background: transparent;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s ease;
     }
 
     .btn:hover {
@@ -97,10 +220,74 @@
 <body>
   <div class="wrap">
     <h1>IMMERSE</h1>
-    <h3>Project Overview</h3>
+    <h3>Project Portfolio</h3>
     <div id="grid" class="grid"></div>
   </div>
   <script>
+    // Function to create a static version of a GIF by drawing it on canvas
+    function createStaticGif(gifSrc, callback) {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = function() {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        callback(canvas.toDataURL());
+      };
+      img.onerror = function() {
+        // If we can't create static version, just use original
+        callback(gifSrc);
+      };
+      img.src = gifSrc;
+    }
+
+    // Create modal for full-size GIF viewing
+    function createGifModal() {
+      const modal = document.createElement('div');
+      modal.className = 'gif-modal';
+      modal.innerHTML = `
+        <div class="gif-modal-content">
+          <img src="" alt="Full size preview">
+          <button class="gif-modal-close">&times;</button>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      
+      // Close modal events
+      const closeBtn = modal.querySelector('.gif-modal-close');
+      closeBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+      });
+      
+      // Close on background click
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+        }
+      });
+      
+      // Close on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          modal.classList.remove('active');
+        }
+      });
+      
+      return modal;
+    }
+
+    const gifModal = createGifModal();
+
+    function showGifModal(gifSrc, altText) {
+      const modalImg = gifModal.querySelector('img');
+      modalImg.src = gifSrc;
+      modalImg.alt = altText;
+      gifModal.classList.add('active');
+    }
+
     fetch("./site-data.json").then(r => r.json()).then(items => {
       const g = document.getElementById("grid");
       items.forEach(d => {
@@ -108,42 +295,63 @@
         el.className = "card";
 
         el.innerHTML = `
-           <div class="links">
-            <h2>${d.name}</h2>
-            ${d.demoGif ? `<button class="btn preview-toggle" data-src="${d.demoGif}">Preview</button>` : ""}
+          <div class="card-preview">
+            ${d.demoGif ? 
+              `<img src="${d.demoGif}" alt="${d.name} preview" loading="lazy" class="static">` : 
+              ``
+            }
           </div>
-          <div class="preview" style="margin:6px 0 10px; display:none"></div>
-          <p>${d.blurb || ""}</p>
-          <div class="links">
-            ${d.web ? `<a class="btn" href="${d.web}" target="_blank" rel="noopener">Web</a>` : ""}
-            ${d.macUrl ? `<a class="btn" href="${d.macUrl}" target="_blank" rel="noopener">Download macOS</a>` : ""}
-            ${d.winUrl ? `<a class="btn" href="${d.winUrl}" target="_blank" rel="noopener">Download Windows</a>` : ""}
-            ${d.androidUrl ? `<a class="btn" href="${d.androidUrl}" target="_blank" rel="noopener">Download Android</a>` : ""}
-            ${d.repoUrl ? `<a class="btn" href="${d.repoUrl}" target="_blank" rel="noopener">Git</a>` : ""}
+          <div class="card-content">
+            <h2>${d.name}</h2>
+            <div class="card-description">
+              <p>${d.blurb || "No description available"}</p>
+            </div>
+            <div class="links">
+              ${d.web ? `<a class="btn" href="${d.web}" target="_blank" rel="noopener">Web</a>` : ""}
+              ${d.macUrl ? `<a class="btn" href="${d.macUrl}" target="_blank" rel="noopener">Download macOS</a>` : ""}
+              ${d.winUrl ? `<a class="btn" href="${d.winUrl}" target="_blank" rel="noopener">Download Windows</a>` : ""}
+              ${d.androidUrl ? `<a class="btn" href="${d.androidUrl}" target="_blank" rel="noopener">Download Android</a>` : ""}
+              ${d.repoUrl ? `<a class="btn" href="${d.repoUrl}" target="_blank" rel="noopener">Git</a>` : ""}
+            </div>
           </div>
         `;
 
-        // Add preview toggle logic
-        const btn = el.querySelector(".preview-toggle");
-        if (btn) {
-          btn.addEventListener("click", () => {
-            const previewDiv = el.querySelector(".preview");
-            if (previewDiv.style.display === "none") {
-              previewDiv.style.display = "block";
-              previewDiv.innerHTML = `<img src="${btn.dataset.src}" alt="${d.name} preview" style="max-width:100%; border-radius:10px; border:1px solid var(--bd)">`;
-              btn.textContent = "Hide";
-            } else {
-              previewDiv.style.display = "none";
-              previewDiv.innerHTML = "";
-              btn.textContent = "Preview";
-            }
+        // Add hover and click effects for GIF
+        const img = el.querySelector('.card-preview img');
+        const preview = el.querySelector('.card-preview');
+        
+        if (img && d.demoGif) {
+          let staticSrc = '';
+          const animatedSrc = d.demoGif;
+          
+          // Create static version
+          createStaticGif(animatedSrc, (staticUrl) => {
+            staticSrc = staticUrl;
+            img.src = staticSrc;
+          });
+          
+          // Hover events on the preview area
+          preview.addEventListener('mouseenter', () => {
+            img.src = animatedSrc;
+            img.classList.remove('static');
+          });
+          
+          preview.addEventListener('mouseleave', () => {
+            img.src = staticSrc;
+            img.classList.add('static');
+          });
+          
+          // Click to show full-size modal
+          img.addEventListener('click', (e) => {
+            e.preventDefault();
+            showGifModal(animatedSrc, `${d.name} full preview`);
           });
         }
 
         g.appendChild(el);
       });
     }).catch(e => {
-      document.getElementById("grid").innerHTML = `<div class="card"><p>Failed to load data: ${e}</p></div>`;
+      document.getElementById("grid").innerHTML = `<div class="card"><div class="card-content"><p>Failed to load data: ${e}</p></div></div>`;
     });
   </script>
 </body>
