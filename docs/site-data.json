@@ -51,7 +51,7 @@
   },
   {
     "name": "AI-Scene-Generator",
-    "blurb": "This is a unity scene generator that allows the user to generate assets and small games by leveraging AI generation tools.",
+    "blurb": "A VR tool for creating 3D scenes and games using AI generation without programming knowledge.",
     "macUrl": "",
     "winUrl": "",
     "androidUrl": "https://github.zhaw.ch/IMMERSE/AI-Scene-Generator/releases/download/Android/build_v1.apk",
