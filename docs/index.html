@@ -10,9 +10,11 @@
     :root {
       --fg: #111;
       --muted: #666;
-      --bg: #2862a1 ;
+      --bg: #fff;
       --card: #fff;
-      --bd: #e5e5e5
+      --bd: #0064a6;
+      --header: #0064a6;
+      --preview: #0064a6;
     }
 
     * {
@@ -52,17 +54,17 @@
 
     .card {
       background: var(--card);
-      border: 1px solid var(--bd);
+      border: 4px solid var(--bd);
       border-radius: 12px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       height: 550px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 16px rgba(0,100,166,0.10);
     }
 
     .card-preview {
-      background: #6b7280;
+  background: var(--preview);
       height: 320px;
       display: flex;
       align-items: center;
@@ -160,10 +162,35 @@
       margin-bottom: 16px;
     }
 
+    .header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      background: var(--header);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 80px;
+      box-shadow: 0 2px 8px rgba(0,100,166,0.15);
+      margin-left: -80px;
+      margin-right: -80px;
+    }
+
+    .header-title {
+      color: #fff;
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin: 0;
+      padding: 0;
+    }
+
     h1 {
       margin: 0 0 0px;
       font-size: 64px;
-      color: #fff
+      color: #fff;
     }
 
     h2 {
@@ -175,7 +202,7 @@
     h3 {
       margin: 0 0 26px;
       font-size: 18px;
-      color: #fff
+  color: #111;
     }
 
     p {
@@ -218,8 +245,10 @@
 </head>
 
 <body>
+  <div class="header">
+    <h1 class="header-title">IMMERSE</h1>
+  </div>
   <div class="wrap">
-    <h1>IMMERSE</h1>
     <h3>Project Portfolio</h3>
     <div id="grid" class="grid"></div>
   </div>
