@@ -57,7 +57,7 @@
     "androidUrl": "https://github.zhaw.ch/IMMERSE/AI-Scene-Generator/releases/download/Android/build_v1.apk",
     "web": "",
     "repoUrl": "https://github.zhaw.ch/IMMERSE/AI-Scene-Generator",
-    "demoGif": ""
+    "demoGif": "assets/AI-Scene-GeneratorDemo.gif"
   },
   {
     "name": "AntExplorer",
