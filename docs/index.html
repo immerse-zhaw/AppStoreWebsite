@@ -10,11 +10,9 @@
     :root {
       --fg: #111;
       --muted: #666;
-      --bg: #fff;
+      --bg: #2862a1 ;
       --card: #fff;
-      --bd: #0064a6;
-      --header: #0064a6;
-      --preview: #0064a6;
+      --bd: #e5e5e5
     }
 
     * {
@@ -29,207 +27,59 @@
     }
 
     .wrap {
-      max-width: 100%;
-      margin: 48px 80px;
-      padding: 0
+      max-width: 960px;
+      margin: 48px auto;
+      padding: 0 16px
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px
-    }
-
-    @media (max-width: 1200px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
+      gap: 12px
     }
 
     .card {
       background: var(--card);
-      border: 4px solid var(--bd);
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      height: 550px;
-      box-shadow: 0 2px 16px rgba(0,100,166,0.10);
-    }
-
-    .card-preview {
-  background: var(--preview);
-      height: 320px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card-preview img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      cursor: pointer;
-    }
-
-    .card-preview img.static {
-      filter: grayscale(20%) brightness(0.9);
-    }
-
-    .card-preview:hover img.static {
-      filter: none;
-    }
-
-    /* Modal overlay for full-size GIF viewing */
-    .gif-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-
-    .gif-modal.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .gif-modal-content {
-      max-width: 80vw;
-      max-height: 80vh;
-      position: relative;
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    .gif-modal img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-
-    .gif-modal-close {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      font-size: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s ease;
-    }
-
-    .gif-modal-close:hover {
-      background: rgba(0, 0, 0, 0.9);
-    }
-
-    .card-content {
-      padding: 20px 24px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card-description {
-      flex: 1;
-      margin-bottom: 16px;
-    }
-
-    .header {
-      position: sticky;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      background: var(--header);
-      z-index: 2000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 80px;
-      box-shadow: 0 2px 8px rgba(0,100,166,0.15);
-      margin-left: -80px;
-      margin-right: -80px;
-    }
-
-    .header-title {
-      color: #fff;
-      font-size: 48px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      margin: 0;
-      padding: 0;
+      border: 1px solid var(--bd);
+      border-radius: 4px;
+      padding: 16px 18px
     }
 
     h1 {
       margin: 0 0 0px;
       font-size: 64px;
-      color: #fff;
+      color: #fff
     }
 
     h2 {
-      margin: 0 0 12px;
-      font-size: 22px;
-      font-weight: 600;
+      margin: 0 0 6px;
+      font-size: 18px
     }
 
     h3 {
       margin: 0 0 26px;
       font-size: 18px;
-  color: #111;
+      color: #fff
     }
 
     p {
-      margin: 0 0 12px;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.5;
+      margin: 0 0 10px;
+      color: var(--muted)
     }
 
     .links {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: auto;
+      gap: 8px
     }
 
     .btn {
-      padding: 8px 14px;
-      border-radius: 8px;
+      padding: 8px 12px;
+      border-radius: 10px;
       border: 1px solid var(--bd);
       text-decoration: none;
       color: var(--fg);
       cursor: pointer;
       background: transparent;
-      font-size: 13px;
-      font-weight: 500;
-      transition: all 0.2s ease;
     }
 
     .btn:hover {
@@ -245,78 +95,12 @@
 </head>
 
 <body>
-  <div class="header">
-    <h1 class="header-title">IMMERSE</h1>
-  </div>
   <div class="wrap">
+    <h1>IMMERSE</h1>
     <h3>Project Portfolio</h3>
     <div id="grid" class="grid"></div>
   </div>
   <script>
-    // Function to create a static version of a GIF by drawing it on canvas
-    function createStaticGif(gifSrc, callback) {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = function() {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        callback(canvas.toDataURL());
-      };
-      img.onerror = function() {
-        // If we can't create static version, just use original
-        callback(gifSrc);
-      };
-      img.src = gifSrc;
-    }
-
-    // Create modal for full-size GIF viewing
-    function createGifModal() {
-      const modal = document.createElement('div');
-      modal.className = 'gif-modal';
-      modal.innerHTML = `
-        <div class="gif-modal-content">
-          <img src="" alt="Full size preview">
-          <button class="gif-modal-close">&times;</button>
-        </div>
-      `;
-      
-      document.body.appendChild(modal);
-      
-      // Close modal events
-      const closeBtn = modal.querySelector('.gif-modal-close');
-      closeBtn.addEventListener('click', () => {
-        modal.classList.remove('active');
-      });
-      
-      // Close on background click
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.classList.remove('active');
-        }
-      });
-      
-      // Close on escape key
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-          modal.classList.remove('active');
-        }
-      });
-      
-      return modal;
-    }
-
-    const gifModal = createGifModal();
-
-    function showGifModal(gifSrc, altText) {
-      const modalImg = gifModal.querySelector('img');
-      modalImg.src = gifSrc;
-      modalImg.alt = altText;
-      gifModal.classList.add('active');
-    }
-
     fetch("./site-data.json").then(r => r.json()).then(items => {
       const g = document.getElementById("grid");
       items.forEach(d => {
@@ -324,63 +108,41 @@
         el.className = "card";
 
         el.innerHTML = `
-          <div class="card-preview">
-            ${d.demoGif ? 
-              `<img src="${d.demoGif}" alt="${d.name} preview" loading="lazy" class="static">` : 
-              ``
-            }
-          </div>
-          <div class="card-content">
+           <div class="links">
             <h2>${d.name}</h2>
-            <div class="card-description">
-              <p>${d.blurb || "No description available"}</p>
-            </div>
-            <div class="links">
-              ${d.web ? `<a class="btn" href="${d.web}" target="_blank" rel="noopener">Web</a>` : ""}
-              ${d.macUrl ? `<a class="btn" href="${d.macUrl}" target="_blank" rel="noopener">Download macOS</a>` : ""}
-              ${d.winUrl ? `<a class="btn" href="${d.winUrl}" target="_blank" rel="noopener">Download Windows</a>` : ""}
-              ${d.androidUrl ? `<a class="btn" href="${d.androidUrl}" target="_blank" rel="noopener">Download Android</a>` : ""}
-              ${d.repoUrl ? `<a class="btn" href="${d.repoUrl}" target="_blank" rel="noopener">Git</a>` : ""}
-            </div>
+            ${d.demoGif ? `<button class="btn preview-toggle" data-src="${d.demoGif}">Preview</button>` : ""}
+          </div>
+          <div class="preview" style="margin:6px 0 10px; display:none"></div>
+          <p>${d.blurb || ""}</p>
+          <div class="links">
+            ${d.web ? `<a class="btn" href="${d.web}" target="_blank" rel="noopener">Web</a>` : ""}
+            ${d.macUrl ? `<a class="btn" href="${d.macUrl}" target="_blank" rel="noopener">Download macOS</a>` : ""}
+            ${d.winUrl ? `<a class="btn" href="${d.winUrl}" target="_blank" rel="noopener">Download Windows</a>` : ""}
+            ${d.repoUrl ? `<a class="btn" href="${d.repoUrl}" target="_blank" rel="noopener">Git</a>` : ""}
           </div>
         `;
 
-        // Add hover and click effects for GIF
-        const img = el.querySelector('.card-preview img');
-        const preview = el.querySelector('.card-preview');
-        
-        if (img && d.demoGif) {
-          let staticSrc = '';
-          const animatedSrc = d.demoGif;
-          
-          // Create static version
-          createStaticGif(animatedSrc, (staticUrl) => {
-            staticSrc = staticUrl;
-            img.src = staticSrc;
-          });
-          
-          // Hover events on the preview area
-          preview.addEventListener('mouseenter', () => {
-            img.src = animatedSrc;
-            img.classList.remove('static');
-          });
-          
-          preview.addEventListener('mouseleave', () => {
-            img.src = staticSrc;
-            img.classList.add('static');
-          });
-          
-          // Click to show full-size modal
-          img.addEventListener('click', (e) => {
-            e.preventDefault();
-            showGifModal(animatedSrc, `${d.name} full preview`);
+        // Add preview toggle logic
+        const btn = el.querySelector(".preview-toggle");
+        if (btn) {
+          btn.addEventListener("click", () => {
+            const previewDiv = el.querySelector(".preview");
+            if (previewDiv.style.display === "none") {
+              previewDiv.style.display = "block";
+              previewDiv.innerHTML = `<img src="${btn.dataset.src}" alt="${d.name} preview" style="max-width:100%; border-radius:10px; border:1px solid var(--bd)">`;
+              btn.textContent = "Hide";
+            } else {
+              previewDiv.style.display = "none";
+              previewDiv.innerHTML = "";
+              btn.textContent = "Preview";
+            }
           });
         }
 
         g.appendChild(el);
       });
     }).catch(e => {
-      document.getElementById("grid").innerHTML = `<div class="card"><div class="card-content"><p>Failed to load data: ${e}</p></div></div>`;
+      document.getElementById("grid").innerHTML = `<div class="card"><p>Failed to load data: ${e}</p></div>`;
     });
   </script>
 </body>
