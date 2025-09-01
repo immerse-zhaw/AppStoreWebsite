@@ -8,13 +8,18 @@
   <meta name="robots" content="noindex, nofollow, noarchive" />
   <style>
     :root {
-      --fg: #111;
-      --muted: #666;
-      --bg: #fff;
-      --card: #fff;
-      --bd: #0064a6;
-      --header: #0064a6;
-      --preview: #0064a6;
+      --fg: #1a1a1a;
+      --muted: #6b7280;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --bd: #2563eb;
+      --header: #1e40af;
+      --preview: #f1f5f9;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
     * {
@@ -54,22 +59,56 @@
 
     .card {
       background: var(--card);
-      border: 4px solid var(--bd);
-      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      height: 550px;
-      box-shadow: 0 2px 16px rgba(0,100,166,0.10);
+      height: 580px;
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--bd);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover::before {
+      opacity: 1;
     }
 
     /* List view card styling */
     .card.list-view {
-      border: 4px solid var(--bd);
-      padding: 24px;
+      border: 1px solid #e5e7eb;
+      padding: 32px;
       height: auto;
       overflow: visible;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      border-radius: 20px;
+      background: var(--card);
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card.list-view:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--bd);
     }
 
     .card.list-view:last-child {
@@ -87,6 +126,19 @@
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
+    }
+
+    .card-preview::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+
+    .card:hover .card-preview::after {
+      transform: translateX(100%);
     }
 
     .card-preview img {
@@ -167,12 +219,12 @@
     }
 
     .card-content {
-      padding: 20px 24px;
+      padding: 24px 28px 28px 28px;
       flex: 1;
       display: flex;
       flex-direction: column;
-      min-height: 230px;
-      max-height: 230px;
+      min-height: 260px;
+      max-height: 260px;
       overflow: hidden;
     }
 
@@ -181,21 +233,22 @@
     }
 
     .card-content::-webkit-scrollbar {
-      width: 6px;
+      width: 8px;
     }
 
     .card-content::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 3px;
+      background: #f1f5f9;
+      border-radius: 4px;
     }
 
     .card-content::-webkit-scrollbar-thumb {
-      background: var(--bd);
-      border-radius: 3px;
+      background: linear-gradient(135deg, var(--bd), #3b82f6);
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
     }
 
     .card-content::-webkit-scrollbar-thumb:hover {
-      background: #004080;
+      background: linear-gradient(135deg, #1d4ed8, var(--bd));
     }
 
     .card-description {
@@ -224,10 +277,21 @@
     .card-description .expand-btn {
       color: var(--bd);
       cursor: pointer;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 13px;
-      margin-top: 8px;
+      margin-top: 12px;
       display: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(37, 99, 235, 0.1);
+      transition: all 0.2s ease;
+      border: none;
+      text-align: left;
+    }
+
+    .card-description .expand-btn:hover {
+      background: rgba(37, 99, 235, 0.2);
+      transform: translateX(4px);
     }
 
     .card-description.has-overflow .expand-btn {
@@ -239,16 +303,17 @@
       top: 0;
       left: 0;
       width: 100vw;
-      background: var(--header);
+      background: var(--gradient);
       z-index: 2000;
       display: flex;
       align-items: center;
       justify-content: space-between;
       height: 80px;
-      box-shadow: 0 2px 8px rgba(0,100,166,0.15);
+      box-shadow: var(--shadow-lg);
       margin-left: -80px;
       margin-right: -80px;
       padding: 0 80px;
+      backdrop-filter: blur(10px);
     }
 
     @media (max-width: 768px) {
@@ -273,6 +338,12 @@
       }
     }
 
+    @media (min-width: 769px) {
+      .header {
+        padding: 0 80px 0 80px;
+      }
+    }
+
     .header-title {
       color: #fff;
       font-size: 48px;
@@ -291,13 +362,36 @@
     h2 {
       margin: 0 0 12px;
       font-size: 22px;
-      font-weight: 600;
+      font-weight: 700;
+      color: var(--fg);
+      background: var(--gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     h3 {
-      margin: 0 0 26px;
-      font-size: 18px;
-  color: #111;
+      margin: 0 0 32px;
+      font-size: 20px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .description-section {
+      margin-bottom: 48px;
+      text-align: center;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .description-text {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0;
+      text-align: justify;
+      padding: 0 20px;
     }
 
     p {
@@ -310,40 +404,54 @@
     .links {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
       margin-top: auto;
+      padding-top: 12px;
     }
 
     .btn {
-      padding: 8px 14px;
-      border-radius: 8px;
-      border: 1px solid var(--bd);
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
       text-decoration: none;
       color: var(--fg);
       cursor: pointer;
-      background: transparent;
-      font-size: 13px;
+      background: var(--card);
+      font-size: 14px;
       font-weight: 500;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
     }
 
     .btn:hover {
-      background: #f3f3f3
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--bd);
+      background: #f8fafc;
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
     }
 
     /* Header button styles */
     .header .btn {
-      background: white;
+      background: rgba(255, 255, 255, 0.9);
       color: var(--header);
-      border: 2px solid #4A9FD9;
-      font-weight: bold;
-      padding: 10px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      font-weight: 600;
+      padding: 12px 20px;
       font-size: 14px;
+      backdrop-filter: blur(10px);
     }
 
     .header .btn:hover {
-      background: #f8f9fa;
-      border-color: #357ABD;
+      background: rgba(255, 255, 255, 1);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     }
 
     .small {
@@ -363,7 +471,10 @@
       </div>
   </div>
   <div class="wrap">
-    <h3>Project Portfolio</h3>
+    <div class="description-section">
+      <h3>Project Portfolio</h3>
+      <p class="description-text">IMMERSE is committed to the digital transformation of education and training through immersive teaching and learning technologies. With a network of innovative partners from the education and technology sectors, structures and formats are being created to ensure the widespread implementation of XR- and AI-based methods in higher and vocational education, thereby sustainably improving their quality in the Canton of Zurich.</p>
+    </div>
     <div id="grid" class="grid"></div>
   </div>
   <script>
