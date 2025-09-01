@@ -63,6 +63,19 @@
       box-shadow: 0 2px 16px rgba(0,100,166,0.10);
     }
 
+    /* List view card styling */
+    .card.list-view {
+      border: 4px solid var(--bd);
+      padding: 24px;
+      height: auto;
+      overflow: visible;
+      margin-bottom: 20px;
+    }
+
+    .card.list-view:last-child {
+      margin-bottom: 0;
+    }
+
     .card-preview {
   background: var(--preview);
       height: 320px;
@@ -171,11 +184,12 @@
       z-index: 2000;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       height: 80px;
       box-shadow: 0 2px 8px rgba(0,100,166,0.15);
       margin-left: -80px;
       margin-right: -80px;
+      padding: 0 80px;
     }
 
     .header-title {
@@ -236,6 +250,21 @@
       background: #f3f3f3
     }
 
+    /* Header button styles */
+    .header .btn {
+      background: white;
+      color: var(--header);
+      border: 2px solid #4A9FD9;
+      font-weight: bold;
+      padding: 10px 16px;
+      font-size: 14px;
+    }
+
+    .header .btn:hover {
+      background: #f8f9fa;
+      border-color: #357ABD;
+    }
+
     .small {
       font-size: 12px;
       color: var(--muted);
@@ -246,7 +275,11 @@
 
 <body>
   <div class="header">
-    <h1 class="header-title">IMMERSE</h1>
+      <h1 class="header-title">IMMERSE</h1>
+      <div style="display:flex; gap:12px;">
+        <button id="listViewBtn" class="btn" title="List View">List View</button>
+        <button id="cardViewBtn" class="btn" title="Card View">Card View</button>
+      </div>
   </div>
   <div class="wrap">
     <h3>Project Portfolio</h3>
@@ -317,18 +350,19 @@
       gifModal.classList.add('active');
     }
 
-    fetch("./site-data.json").then(r => r.json()).then(items => {
-      const g = document.getElementById("grid");
+    // --- View Toggle Logic ---
+    const grid = document.getElementById("grid");
+    let currentView = "card";
+
+    function renderCardView(items) {
+      grid.className = "grid";
+      grid.innerHTML = "";
       items.forEach(d => {
         const el = document.createElement("section");
         el.className = "card";
-
         el.innerHTML = `
           <div class="card-preview">
-            ${d.demoGif ? 
-              `<img src="${d.demoGif}" alt="${d.name} preview" loading="lazy" class="static">` : 
-              ``
-            }
+            ${d.demoGif ? `<img src="${d.demoGif}" alt="${d.name} preview" loading="lazy" class="static">` : ``}
           </div>
           <div class="card-content">
             <h2>${d.name}</h2>
@@ -344,43 +378,91 @@
             </div>
           </div>
         `;
-
         // Add hover and click effects for GIF
         const img = el.querySelector('.card-preview img');
         const preview = el.querySelector('.card-preview');
-        
         if (img && d.demoGif) {
           let staticSrc = '';
           const animatedSrc = d.demoGif;
-          
-          // Create static version
           createStaticGif(animatedSrc, (staticUrl) => {
             staticSrc = staticUrl;
             img.src = staticSrc;
           });
-          
-          // Hover events on the preview area
           preview.addEventListener('mouseenter', () => {
             img.src = animatedSrc;
             img.classList.remove('static');
           });
-          
           preview.addEventListener('mouseleave', () => {
             img.src = staticSrc;
             img.classList.add('static');
           });
-          
-          // Click to show full-size modal
           img.addEventListener('click', (e) => {
             e.preventDefault();
             showGifModal(animatedSrc, `${d.name} full preview`);
           });
         }
+        grid.appendChild(el);
+      });
+    }
 
-        g.appendChild(el);
+    function renderListView(items) {
+      grid.className = "";
+      grid.innerHTML = "";
+      items.forEach(d => {
+        const el = document.createElement("section");
+        el.className = "card list-view";
+        el.innerHTML = `
+           <div class="links">
+            <h2>${d.name}</h2>
+            ${d.demoGif ? `<button class="btn preview-toggle" data-src="${d.demoGif}">Preview</button>` : ""}
+          </div>
+          <div class="preview" style="margin:6px 0 10px; display:none"></div>
+          <p>${d.blurb || ""}</p>
+          <div class="links">
+            ${d.web ? `<a class="btn" href="${d.web}" target="_blank" rel="noopener">Web</a>` : ""}
+            ${d.macUrl ? `<a class="btn" href="${d.macUrl}" target="_blank" rel="noopener">Download macOS</a>` : ""}
+            ${d.winUrl ? `<a class="btn" href="${d.winUrl}" target="_blank" rel="noopener">Download Windows</a>` : ""}
+            ${d.repoUrl ? `<a class="btn" href="${d.repoUrl}" target="_blank" rel="noopener">Git</a>` : ""}
+          </div>
+        `;
+        // Add preview toggle logic
+        const btn = el.querySelector(".preview-toggle");
+        if (btn) {
+          btn.addEventListener("click", () => {
+            const previewDiv = el.querySelector(".preview");
+            if (previewDiv.style.display === "none") {
+              previewDiv.style.display = "block";
+              previewDiv.innerHTML = `<img src="${btn.dataset.src}" alt="${d.name} preview" style="max-width:100%; border-radius:10px; border:1px solid var(--bd)">`;
+              btn.textContent = "Hide";
+            } else {
+              previewDiv.style.display = "none";
+              previewDiv.innerHTML = "";
+              btn.textContent = "Preview";
+            }
+          });
+        }
+        grid.appendChild(el);
+      });
+    }
+
+    let itemsCache = null;
+    fetch("./site-data.json").then(r => r.json()).then(items => {
+      itemsCache = items;
+      renderCardView(items);
+      document.getElementById("listViewBtn").addEventListener("click", () => {
+        if (currentView !== "list") {
+          currentView = "list";
+          renderListView(itemsCache);
+        }
+      });
+      document.getElementById("cardViewBtn").addEventListener("click", () => {
+        if (currentView !== "card") {
+          currentView = "card";
+          renderCardView(itemsCache);
+        }
       });
     }).catch(e => {
-      document.getElementById("grid").innerHTML = `<div class="card"><div class="card-content"><p>Failed to load data: ${e}</p></div></div>`;
+      grid.innerHTML = `<div class="card"><div class="card-content"><p>Failed to load data: ${e}</p></div></div>`;
     });
   </script>
 </body>
