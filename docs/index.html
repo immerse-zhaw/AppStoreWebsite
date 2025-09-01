@@ -77,13 +77,16 @@
     }
 
     .card-preview {
-  background: var(--preview);
+      background: var(--preview);
       height: 320px;
+      min-height: 320px;
+      max-height: 320px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       overflow: hidden;
+      flex-shrink: 0;
     }
 
     .card-preview img {
@@ -168,11 +171,67 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      min-height: 230px;
+      max-height: 230px;
+      overflow: hidden;
+    }
+
+    .card-content.expanded {
+      overflow-y: auto;
+    }
+
+    .card-content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .card-content::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 3px;
+    }
+
+    .card-content::-webkit-scrollbar-thumb {
+      background: var(--bd);
+      border-radius: 3px;
+    }
+
+    .card-content::-webkit-scrollbar-thumb:hover {
+      background: #004080;
     }
 
     .card-description {
       flex: 1;
       margin-bottom: 16px;
+      position: relative;
+    }
+
+    .card-description p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .card-description p.truncated {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-description .expand-btn {
+      color: var(--bd);
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 13px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .card-description.has-overflow .expand-btn {
+      display: block;
     }
 
     .header {
@@ -190,6 +249,28 @@
       margin-left: -80px;
       margin-right: -80px;
       padding: 0 80px;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 0 16px;
+        margin-left: -16px;
+        margin-right: -16px;
+        height: 60px;
+      }
+      
+      .header-title {
+        font-size: 32px;
+      }
+      
+      .header .btn {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+      
+      .wrap {
+        margin: 24px 16px;
+      }
     }
 
     .header-title {
@@ -367,7 +448,8 @@
           <div class="card-content">
             <h2>${d.name}</h2>
             <div class="card-description">
-              <p>${d.blurb || "No description available"}</p>
+              <p class="truncated">${d.blurb || "No description available"}</p>
+              <span class="expand-btn">Read more...</span>
             </div>
             <div class="links">
               ${d.web ? `<a class="btn" href="${d.web}" target="_blank" rel="noopener">Web</a>` : ""}
@@ -378,6 +460,33 @@
             </div>
           </div>
         `;
+
+        // Add text truncation functionality
+        const description = el.querySelector('.card-description');
+        const paragraph = description.querySelector('p');
+        const expandBtn = description.querySelector('.expand-btn');
+        const cardContent = el.querySelector('.card-content');
+        const originalText = d.blurb || "No description available";
+        
+        // Check if text is long enough to need truncation
+        if (originalText.length > 150 || originalText.split(' ').length > 25) {
+          description.classList.add('has-overflow');
+          let isExpanded = false;
+          
+          expandBtn.addEventListener('click', () => {
+            if (!isExpanded) {
+              paragraph.classList.remove('truncated');
+              cardContent.classList.add('expanded');
+              expandBtn.textContent = 'Show less';
+              isExpanded = true;
+            } else {
+              paragraph.classList.add('truncated');
+              cardContent.classList.remove('expanded');
+              expandBtn.textContent = 'Read more...';
+              isExpanded = false;
+            }
+          });
+        }
         // Add hover and click effects for GIF
         const img = el.querySelector('.card-preview img');
         const preview = el.querySelector('.card-preview');
