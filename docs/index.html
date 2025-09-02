@@ -82,10 +82,13 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: var(--gradient);
+      height: 16px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       opacity: 0;
       transition: opacity 0.3s ease;
+      border-radius: 16px 16px 0 0 !important;
+      pointer-events: none;
+      z-index: 1;
     }
 
     .card:hover::before {
@@ -226,6 +229,24 @@
       min-height: 260px;
       max-height: 260px;
       overflow: hidden;
+      height: 100%;
+    }
+
+    .card-content > h2 {
+      flex-shrink: 0;
+      margin-bottom: 16px;
+    }
+
+    .card-content .card-description {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .card-content .links {
+      flex-shrink: 0;
+      margin-top: auto;
     }
 
     .card-content.expanded {
@@ -255,6 +276,8 @@
       flex: 1;
       margin-bottom: 16px;
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
     .card-description p {
@@ -279,7 +302,7 @@
       cursor: pointer;
       font-weight: 600;
       font-size: 13px;
-      margin-top: 12px;
+      margin-top: auto;
       display: none;
       padding: 4px 8px;
       border-radius: 6px;
@@ -287,6 +310,7 @@
       transition: all 0.2s ease;
       border: none;
       text-align: left;
+      align-self: flex-start;
     }
 
     .card-description .expand-btn:hover {
@@ -405,7 +429,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: auto;
+      margin-top: 0;
       padding-top: 12px;
     }
 
