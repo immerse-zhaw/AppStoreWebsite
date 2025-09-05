@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Projects</title>
   <meta name="robots" content="noindex, nofollow, noarchive" />
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     :root {
       --fg: #1a1a1a;
@@ -92,6 +94,10 @@
     }
 
     .card:hover::before {
+      opacity: 0;
+    }
+
+    .card.list-view:hover::before {
       opacity: 1;
     }
 
@@ -226,31 +232,69 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      min-height: 260px;
-      max-height: 260px;
+      height: 260px;
       overflow: hidden;
-      height: 100%;
+      gap: 8px;
     }
 
     .card-content > h2 {
       flex-shrink: 0;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
     }
 
     .card-content .card-description {
       flex: 1;
       display: flex;
       flex-direction: column;
-      min-height: 0;
+      min-height: 60px;
+      overflow: hidden;
     }
 
     .card-content .links {
       flex-shrink: 0;
       margin-top: auto;
+      max-height: 80px;
+      overflow: visible;
+      padding-top: 8px;
+    }
+
+    /* When expanded, make the entire content scrollable including buttons */
+    .card-content.expanded {
+      overflow-y: auto;
+    }
+
+    .card-content.expanded .links {
+      margin-top: 16px;
+      flex-shrink: 0;
+    }
+
+    .card-content.expanded .card-description {
+      flex: none;
+      min-height: auto;
+      overflow: visible;
     }
 
     .card-content.expanded {
       overflow-y: auto;
+    }
+
+    .card-description.expanded p::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .card-description.expanded p::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 4px;
+    }
+
+    .card-description.expanded p::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, var(--bd), #3b82f6);
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .card-description.expanded p::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, #1d4ed8, var(--bd));
     }
 
     .card-content::-webkit-scrollbar {
@@ -274,43 +318,58 @@
 
     .card-description {
       flex: 1;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
       position: relative;
       display: flex;
       flex-direction: column;
+      min-height: 60px;
+      overflow: hidden;
     }
 
     .card-description p {
-      margin: 0 0 12px;
+      margin: 0 0 8px;
       color: var(--muted);
-      font-size: 15px;
-      line-height: 1.5;
+      font-size: 14px;
+      line-height: 1.4;
       overflow: hidden;
       transition: all 0.3s ease;
+      flex: 1;
+      min-height: 40px;
+    }
+
+    .card-description.expanded {
+      overflow: visible;
+    }
+
+    .card-description.expanded p {
+      overflow-y: auto;
+      max-height: 120px;
     }
 
     .card-description p.truncated {
       display: -webkit-box;
-      -webkit-line-clamp: 3;
-      line-clamp: 3;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .card-description .expand-btn {
       color: var(--bd);
       cursor: pointer;
       font-weight: 600;
-      font-size: 13px;
+      font-size: 12px;
       margin-top: auto;
       display: none;
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 2px 6px;
+      border-radius: 4px;
       background: rgba(37, 99, 235, 0.1);
       transition: all 0.2s ease;
       border: none;
       text-align: left;
       align-self: flex-start;
+      margin-bottom: 4px;
     }
 
     .card-description .expand-btn:hover {
@@ -433,6 +492,10 @@
       padding-top: 12px;
     }
 
+    .links .btn {
+      white-space: nowrap;
+    }
+
     .btn {
       padding: 10px 16px;
       border-radius: 12px;
@@ -447,6 +510,34 @@
       box-shadow: var(--shadow-sm);
       position: relative;
       overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn i {
+      font-size: 16px;
+    }
+
+    .btn.icon-only {
+      padding: 12px;
+      min-width: 44px;
+      justify-content: center;
+    }
+
+    .btn.icon-only .btn-text {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .btn .btn-text {
+        display: none;
+      }
+      .btn {
+        padding: 12px;
+        min-width: 44px;
+        justify-content: center;
+      }
     }
 
     .btn:hover {
@@ -587,11 +678,11 @@
               <span class="expand-btn">Read more...</span>
             </div>
             <div class="links">
-              ${d.web ? `<a class="btn" href="${d.web}" target="_blank" rel="noopener">Web</a>` : ""}
-              ${d.macUrl ? `<a class="btn" href="${d.macUrl}" target="_blank" rel="noopener">Download macOS</a>` : ""}
-              ${d.winUrl ? `<a class="btn" href="${d.winUrl}" target="_blank" rel="noopener">Download Windows</a>` : ""}
-              ${d.androidUrl ? `<a class="btn" href="${d.androidUrl}" target="_blank" rel="noopener">Download Android</a>` : ""}
-              ${d.repoUrl ? `<a class="btn" href="${d.repoUrl}" target="_blank" rel="noopener">Git</a>` : ""}
+              ${d.web ? `<a class="btn" href="${d.web}" target="_blank" rel="noopener"><i class="fas fa-globe"></i><span class="btn-text">Web</span></a>` : ""}
+              ${d.macUrl ? `<a class="btn" href="${d.macUrl}" target="_blank" rel="noopener"><i class="fab fa-apple"></i><span class="btn-text">macOS</span></a>` : ""}
+              ${d.winUrl ? `<a class="btn" href="${d.winUrl}" target="_blank" rel="noopener"><i class="fab fa-windows"></i><span class="btn-text">Windows</span></a>` : ""}
+              ${d.androidUrl ? `<a class="btn" href="${d.androidUrl}" target="_blank" rel="noopener"><i class="fab fa-android"></i><span class="btn-text">Android</span></a>` : ""}
+              ${d.repoUrl ? `<a class="btn" href="${d.repoUrl}" target="_blank" rel="noopener"><i class="fab fa-github"></i><span class="btn-text">Git</span></a>` : ""}
             </div>
           </div>
         `;
@@ -600,27 +691,35 @@
         const description = el.querySelector('.card-description');
         const paragraph = description.querySelector('p');
         const expandBtn = description.querySelector('.expand-btn');
-        const cardContent = el.querySelector('.card-content');
         const originalText = d.blurb || "No description available";
         
-        // Check if text is long enough to need truncation
-        if (originalText.length > 150 || originalText.split(' ').length > 25) {
+        // Ensure text is always visible and HTML tags are interpreted
+        paragraph.innerHTML = originalText;
+        
+        // Check if text is long enough to need truncation (more aggressive)
+        if (originalText.length > 120 || originalText.split(' ').length > 18) {
           description.classList.add('has-overflow');
+          paragraph.classList.add('truncated');
           let isExpanded = false;
           
           expandBtn.addEventListener('click', () => {
+            const cardContent = el.querySelector('.card-content');
             if (!isExpanded) {
               paragraph.classList.remove('truncated');
+              description.classList.add('expanded');
               cardContent.classList.add('expanded');
               expandBtn.textContent = 'Show less';
               isExpanded = true;
             } else {
               paragraph.classList.add('truncated');
+              description.classList.remove('expanded');
               cardContent.classList.remove('expanded');
               expandBtn.textContent = 'Read more...';
               isExpanded = false;
             }
           });
+        } else {
+          paragraph.classList.remove('truncated');
         }
         // Add hover and click effects for GIF
         const img = el.querySelector('.card-preview img');
@@ -663,10 +762,10 @@
           <div class="preview" style="margin:6px 0 10px; display:none"></div>
           <p>${d.blurb || ""}</p>
           <div class="links">
-            ${d.web ? `<a class="btn" href="${d.web}" target="_blank" rel="noopener">Web</a>` : ""}
-            ${d.macUrl ? `<a class="btn" href="${d.macUrl}" target="_blank" rel="noopener">Download macOS</a>` : ""}
-            ${d.winUrl ? `<a class="btn" href="${d.winUrl}" target="_blank" rel="noopener">Download Windows</a>` : ""}
-            ${d.repoUrl ? `<a class="btn" href="${d.repoUrl}" target="_blank" rel="noopener">Git</a>` : ""}
+            ${d.web ? `<a class="btn" href="${d.web}" target="_blank" rel="noopener"><i class="fas fa-globe"></i><span class="btn-text">Web</span></a>` : ""}
+            ${d.macUrl ? `<a class="btn" href="${d.macUrl}" target="_blank" rel="noopener"><i class="fab fa-apple"></i><span class="btn-text">macOS</span></a>` : ""}
+            ${d.winUrl ? `<a class="btn" href="${d.winUrl}" target="_blank" rel="noopener"><i class="fab fa-windows"></i><span class="btn-text">Windows</span></a>` : ""}
+            ${d.repoUrl ? `<a class="btn" href="${d.repoUrl}" target="_blank" rel="noopener"><i class="fab fa-github"></i><span class="btn-text">Git</span></a>` : ""}
           </div>
         `;
         // Add preview toggle logic
