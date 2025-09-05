@@ -400,7 +400,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 80px;
+      height: 55px;
       box-shadow: var(--shadow-lg);
       margin-left: -80px;
       margin-right: -80px;
@@ -413,11 +413,11 @@
         padding: 0 16px;
         margin-left: -16px;
         margin-right: -16px;
-        height: 60px;
+        height: 45px;
       }
       
-      .header-title {
-        font-size: 32px;
+      .logo {
+        height: 24px;
       }
       
       .header .btn {
@@ -436,13 +436,21 @@
       }
     }
 
-    .header-title {
-      color: #fff;
-      font-size: 48px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      margin: 0;
-      padding: 0;
+    .header-logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      height: 36px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    @media (max-width: 768px) {
+      .logo {
+        height: 28px;
+      }
     }
 
     h1 {
@@ -471,10 +479,25 @@
 
     .description-section {
       margin-bottom: 48px;
-      text-align: center;
-      max-width: 800px;
+      max-width: 1200px;
       margin-left: auto;
       margin-right: auto;
+    }
+
+    .description-content {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      padding: 0 20px;
+    }
+
+    .description-text-container {
+      flex: 1;
+    }
+
+    .description-text-container h3 {
+      text-align: left;
+      margin: 0 0 24px 0;
     }
 
     .description-text {
@@ -483,7 +506,38 @@
       color: var(--muted);
       margin: 0;
       text-align: justify;
-      padding: 0 20px;
+    }
+
+    .description-logo {
+      flex: 0 0 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .immerse-logo {
+      width: 100%;
+      height: auto;
+      max-width: 300px;
+    }
+
+    @media (max-width: 768px) {
+      .description-content {
+        flex-direction: column;
+        gap: 32px;
+      }
+      
+      .description-text-container h3 {
+        text-align: center;
+      }
+      
+      .description-logo {
+        flex: 0 0 auto;
+      }
+      
+      .immerse-logo {
+        max-width: 200px;
+      }
     }
 
     p {
@@ -577,11 +631,11 @@
       color: rgba(255, 255, 255, 0.7);
       border: none;
       font-weight: 500;
-      padding: 10px 12px;
-      font-size: 16px;
+      padding: 8px 10px;
+      font-size: 15px;
       border-radius: 8px;
       transition: all 0.2s ease;
-      min-width: 40px;
+      min-width: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -615,7 +669,9 @@
 
 <body>
   <div class="header">
-      <h1 class="header-title">IMMERSE</h1>
+      <div class="header-logo">
+        <img src="assets/website/logo_immerse_white.png" alt="IMMERSE" class="logo">
+      </div>
       <div class="view-toggle-group">
         <button id="listViewBtn" class="btn view-btn" title="List View">
           <i class="fas fa-list"></i>
@@ -627,8 +683,15 @@
   </div>
   <div class="wrap">
     <div class="description-section">
-      <h3>Project Portfolio</h3>
-      <p class="description-text">IMMERSE is committed to the digital transformation of education and training through immersive teaching and learning technologies. With a network of innovative partners from the education and technology sectors, structures and formats are being created to ensure the widespread implementation of XR- and AI-based methods in higher and vocational education, thereby sustainably improving their quality in the Canton of Zurich.</p>
+      <div class="description-content">
+        <div class="description-text-container">
+          <h3>Project Portfolio</h3>
+          <p class="description-text">IMMERSE is committed to the digital transformation of education and training through immersive teaching and learning technologies. With a network of innovative partners from the education and technology sectors, structures and formats are being created to ensure the widespread implementation of XR- and AI-based methods in higher and vocational education, thereby sustainably improving their quality in the Canton of Zurich.</p>
+        </div>
+        <div class="description-logo">
+          <img src="assets/website/logo_immerse_black.png" alt="IMMERSE Logo" class="immerse-logo">
+        </div>
+      </div>
     </div>
     <div id="grid" class="grid"></div>
   </div>
