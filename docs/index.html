@@ -277,29 +277,6 @@
       overflow: visible;
     }
 
-    .card-content.expanded {
-      overflow-y: auto;
-    }
-
-    .card-description.expanded p::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    .card-description.expanded p::-webkit-scrollbar-track {
-      background: #f1f5f9;
-      border-radius: 4px;
-    }
-
-    .card-description.expanded p::-webkit-scrollbar-thumb {
-      background: linear-gradient(135deg, var(--bd), #3b82f6);
-      border-radius: 4px;
-      border: 1px solid #e2e8f0;
-    }
-
-    .card-description.expanded p::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(135deg, #1d4ed8, var(--bd));
-    }
-
     .card-content::-webkit-scrollbar {
       width: 8px;
     }
@@ -345,8 +322,8 @@
     }
 
     .card-description.expanded p {
-      overflow-y: auto;
-      max-height: 120px;
+      overflow: visible;
+      max-height: none;
     }
 
     .card-description p.truncated {
