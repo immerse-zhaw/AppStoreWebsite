@@ -561,21 +561,48 @@
       box-shadow: var(--shadow-sm);
     }
 
-    /* Header button styles */
-    .header .btn {
-      background: rgba(255, 255, 255, 0.9);
-      color: var(--header);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      font-weight: 600;
-      padding: 12px 20px;
-      font-size: 14px;
+    /* View toggle button group */
+    .view-toggle-group {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 4px;
+      display: flex;
+      gap: 2px;
       backdrop-filter: blur(10px);
     }
 
-    .header .btn:hover {
+    .view-btn {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.7);
+      border: none;
+      font-weight: 500;
+      padding: 10px 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      min-width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .view-btn:hover {
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.1);
+      transform: none;
+      box-shadow: none;
+    }
+
+    .view-btn.active {
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--header);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .view-btn.active:hover {
       background: rgba(255, 255, 255, 1);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      color: var(--header);
     }
 
     .small {
@@ -589,9 +616,13 @@
 <body>
   <div class="header">
       <h1 class="header-title">IMMERSE</h1>
-      <div style="display:flex; gap:12px;">
-        <button id="listViewBtn" class="btn" title="List View">List View</button>
-        <button id="cardViewBtn" class="btn" title="Card View">Card View</button>
+      <div class="view-toggle-group">
+        <button id="listViewBtn" class="btn view-btn" title="List View">
+          <i class="fas fa-list"></i>
+        </button>
+        <button id="cardViewBtn" class="btn view-btn active" title="Card View">
+          <i class="fas fa-th-large"></i>
+        </button>
       </div>
   </div>
   <div class="wrap">
@@ -846,12 +877,18 @@
       document.getElementById("listViewBtn").addEventListener("click", () => {
         if (currentView !== "list") {
           currentView = "list";
+          // Update active states
+          document.getElementById("listViewBtn").classList.add("active");
+          document.getElementById("cardViewBtn").classList.remove("active");
           renderListView(itemsCache);
         }
       });
       document.getElementById("cardViewBtn").addEventListener("click", () => {
         if (currentView !== "card") {
           currentView = "card";
+          // Update active states
+          document.getElementById("cardViewBtn").classList.add("active");
+          document.getElementById("listViewBtn").classList.remove("active");
           renderCardView(itemsCache);
         }
       });
