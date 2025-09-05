@@ -241,7 +241,8 @@
       flex-shrink: 0;
       margin-bottom: 6px;
       font-size: 1.4em;
-      line-height: 1.2;
+      line-height: 1.3;
+      overflow: visible;
     }
 
     .card-content .card-description {
@@ -337,6 +338,18 @@
       max-height: calc(1.4em * 2);
       word-break: break-word;
       position: relative;
+    }
+
+    .card-description p.truncated.three-lines {
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      max-height: calc(1.4em * 3);
+    }
+
+    .card-description p.truncated.four-lines {
+      -webkit-line-clamp: 4;
+      line-clamp: 4;
+      max-height: calc(1.4em * 4);
     }
 
     .card-description p.truncated::after {
@@ -683,7 +696,7 @@
           </div>
         `;
 
-        // Add text truncation functionality
+        // Add text truncation functionality with dynamic line detection
         const description = el.querySelector('.card-description');
         const paragraph = description.querySelector('p');
         const expandBtn = description.querySelector('.expand-btn');
@@ -692,22 +705,64 @@
         // Ensure text is always visible and HTML tags are interpreted
         paragraph.innerHTML = originalText;
         
-        // Check if text is long enough to need truncation (more aggressive)
-        if (originalText.length > 120 || originalText.split(' ').length > 18) {
+        // Check if text is long enough to need truncation (more sensitive)
+        if (originalText.length > 80 || originalText.split(' ').length > 12) {
           description.classList.add('has-overflow');
           paragraph.classList.add('truncated');
+          
+          // Check available space to determine optimal number of lines
+          setTimeout(() => {
+            const cardContent = el.querySelector('.card-content');
+            const cardContentHeight = cardContent.offsetHeight;
+            const titleHeight = el.querySelector('h2').offsetHeight;
+            const linksContainer = el.querySelector('.links');
+            const linksHeight = linksContainer.offsetHeight;
+            const expandBtnHeight = expandBtn.offsetHeight;
+            
+            // Calculate available space for text (minus padding and margins)
+            const usedSpace = titleHeight + linksHeight + expandBtnHeight + 40; // 40px for margins/padding
+            const availableTextSpace = cardContentHeight - usedSpace;
+            const lineHeight = 1.4 * 14; // 14px font size * 1.4 line height
+            
+            // Determine optimal number of lines based on available space
+            const maxPossibleLines = Math.floor(availableTextSpace / lineHeight);
+            
+            if (maxPossibleLines >= 4) {
+              paragraph.classList.add('four-lines');
+            } else if (maxPossibleLines >= 3) {
+              paragraph.classList.add('three-lines');
+            }
+            // Otherwise keep default 2 lines
+          }, 0);
+          
           let isExpanded = false;
           
           expandBtn.addEventListener('click', () => {
             const cardContent = el.querySelector('.card-content');
             if (!isExpanded) {
-              paragraph.classList.remove('truncated');
+              paragraph.classList.remove('truncated', 'three-lines', 'four-lines');
               description.classList.add('expanded');
               cardContent.classList.add('expanded');
               expandBtn.textContent = 'Show less';
               isExpanded = true;
             } else {
               paragraph.classList.add('truncated');
+              // Re-calculate optimal lines when collapsing
+              const cardContentHeight = cardContent.offsetHeight;
+              const titleHeight = el.querySelector('h2').offsetHeight;
+              const linksHeight = el.querySelector('.links').offsetHeight;
+              const expandBtnHeight = expandBtn.offsetHeight;
+              const usedSpace = titleHeight + linksHeight + expandBtnHeight + 40;
+              const availableTextSpace = cardContentHeight - usedSpace;
+              const lineHeight = 1.4 * 14;
+              const maxPossibleLines = Math.floor(availableTextSpace / lineHeight);
+              
+              if (maxPossibleLines >= 4) {
+                paragraph.classList.add('four-lines');
+              } else if (maxPossibleLines >= 3) {
+                paragraph.classList.add('three-lines');
+              }
+              
               description.classList.remove('expanded');
               cardContent.classList.remove('expanded');
               expandBtn.textContent = 'Read more...';
