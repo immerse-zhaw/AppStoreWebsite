@@ -664,6 +664,106 @@
       color: var(--muted);
       margin-top: 8px
     }
+
+    /* Filter dropdown styles */
+    .filter-container {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .filter-btn {
+      background: var(--card);
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--bd);
+      background: #f8fafc;
+    }
+
+    .filter-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+      padding: 16px;
+      min-width: 280px;
+      z-index: 1000;
+      display: none;
+    }
+
+    .filter-section {
+      margin-bottom: 16px;
+    }
+
+    .filter-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .filter-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .filter-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-tag {
+      padding: 6px 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s ease;
+    }
+
+    .filter-tag:hover {
+      border-color: var(--bd);
+    }
+
+    .filter-tag.active {
+      background: var(--bd);
+      color: white;
+      border-color: var(--bd);
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .filter-clear {
+      background: #f59e0b;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .filter-clear:hover {
+      background: #d97706;
+    }
   </style>
 </head>
 
@@ -693,6 +793,37 @@
         </div>
       </div>
     </div>
+    
+    <!-- Filter dropdown -->
+    <div class="filter-container">
+      <button class="filter-btn" id="filterToggle">
+        <i class="fas fa-filter"></i>
+        <span>Filters</span>
+        <i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+      </button>
+      <div class="filter-dropdown" id="filterDropdown">
+        <div class="filter-section">
+          <div class="filter-title">Display Type</div>
+          <div class="filter-options" id="displayFilters">
+            <div class="filter-tag" data-tag="Display">Display</div>
+            <div class="filter-tag" data-tag="HMD">HMD</div>
+          </div>
+        </div>
+        <div class="filter-section">
+          <div class="filter-title">Platform</div>
+          <div class="filter-options" id="platformFilters">
+            <div class="filter-tag" data-tag="Web">Web</div>
+            <div class="filter-tag" data-tag="Windows">Windows</div>
+            <div class="filter-tag" data-tag="macOS">macOS</div>
+            <div class="filter-tag" data-tag="Android">Android</div>
+          </div>
+        </div>
+        <div class="filter-actions">
+          <button class="filter-clear" id="clearFilters">Clear All</button>
+        </div>
+      </div>
+    </div>
+    
     <div id="grid" class="grid"></div>
   </div>
   <script>
@@ -934,16 +1065,89 @@
     }
 
     let itemsCache = null;
+    let activeFilters = new Set();
+    
+    function filterItems(items) {
+      if (activeFilters.size === 0) return items;
+      
+      return items.filter(item => {
+        if (!item.tags) return false;
+        const itemTags = item.tags.split(',').map(t => t.trim());
+        // Item matches if it contains ANY of the active filters
+        const matches = Array.from(activeFilters).some(filter => itemTags.includes(filter));
+        console.log(`Item: ${item.name}, Tags: [${itemTags.join(', ')}], Active Filters: [${Array.from(activeFilters).join(', ')}], Matches: ${matches}`);
+        return matches;
+      });
+    }
+    
+    function updateFilterDisplay() {
+      console.log('Updating filter display, active filters:', Array.from(activeFilters));
+      const filteredItems = filterItems(itemsCache);
+      console.log('Filtered items count:', filteredItems.length);
+      if (currentView === "card") {
+        renderCardView(filteredItems);
+      } else {
+        renderListView(filteredItems);
+      }
+    }
+    
     fetch("./site-data.json").then(r => r.json()).then(items => {
       itemsCache = items;
       renderCardView(items);
+      
+      // Filter functionality
+      const filterToggle = document.getElementById("filterToggle");
+      const filterDropdown = document.getElementById("filterDropdown");
+      
+      // Toggle dropdown
+      filterToggle.addEventListener("click", () => {
+        const isOpen = filterDropdown.style.display === "block";
+        filterDropdown.style.display = isOpen ? "none" : "block";
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!filterToggle.contains(e.target) && !filterDropdown.contains(e.target)) {
+          filterDropdown.style.display = "none";
+        }
+      });
+      
+      // Filter tag clicks
+      document.querySelectorAll(".filter-tag").forEach(tag => {
+        tag.addEventListener("click", () => {
+          const tagValue = tag.dataset.tag;
+          console.log('Filter tag clicked:', tagValue);
+          if (activeFilters.has(tagValue)) {
+            activeFilters.delete(tagValue);
+            tag.classList.remove("active");
+            console.log('Removed filter:', tagValue);
+          } else {
+            activeFilters.add(tagValue);
+            tag.classList.add("active");
+            console.log('Added filter:', tagValue);
+          }
+          console.log('Active filters after click:', Array.from(activeFilters));
+          updateFilterDisplay();
+        });
+      });
+      
+      // Clear filters
+      document.getElementById("clearFilters").addEventListener("click", () => {
+        activeFilters.clear();
+        document.querySelectorAll(".filter-tag").forEach(tag => {
+          tag.classList.remove("active");
+        });
+        updateFilterDisplay();
+      });
+      
+      // View toggle buttons
       document.getElementById("listViewBtn").addEventListener("click", () => {
         if (currentView !== "list") {
           currentView = "list";
           // Update active states
           document.getElementById("listViewBtn").classList.add("active");
           document.getElementById("cardViewBtn").classList.remove("active");
-          renderListView(itemsCache);
+          updateFilterDisplay();
         }
       });
       document.getElementById("cardViewBtn").addEventListener("click", () => {
@@ -952,7 +1156,7 @@
           // Update active states
           document.getElementById("cardViewBtn").classList.add("active");
           document.getElementById("listViewBtn").classList.remove("active");
-          renderCardView(itemsCache);
+          updateFilterDisplay();
         }
       });
     }).catch(e => {

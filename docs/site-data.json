@@ -7,6 +7,7 @@
     "androidUrl": "",
     "web": "https://github.zhaw.ch/pages/IMMERSE/BracesNotebook/",
     "repoUrl": "https://github.zhaw.ch/IMMERSE/BracesNotebook",
+    "tags": "Display, macOS, Windows, Web",
     "demoGif": "assets/BracesNotebookDemo.gif"
   },
   {
@@ -17,6 +18,7 @@
     "androidUrl": "",
     "web": "",
     "repoUrl": "https://github.zhaw.ch/IMMERSE/AnimationRigging",
+    "tags": "Display, macOS, Windows",
     "demoGif": "assets/AnimationRiggingDemo.gif"
   },
   {
@@ -27,6 +29,7 @@
     "androidUrl": "",
     "web": "",
     "repoUrl": "https://github.zhaw.ch/IMMERSE/HeartrateMonitor",
+    "tags": "Display, macOS, Windows",
     "demoGif": "assets/HeartrateMonitorDemo.gif"
   },
   {
@@ -37,6 +40,7 @@
     "androidUrl": "",
     "web": "",
     "repoUrl": "https://github.zhaw.ch/IMMERSE/VirtualCoEmbodimentFullBody",
+    "tags": "macOS, Windows",
     "demoGif": "assets/VirtualCoEmbodimentFullBodyDemo.gif"
   },
   {
@@ -47,6 +51,7 @@
     "androidUrl": "https://github.zhaw.ch/IMMERSE/VR_Hands_CoEmb/releases/download/v1.0.0/Hand_CoEmb_newUI_220825_Android.apk",
     "web": "",
     "repoUrl": "https://github.zhaw.ch/IMMERSE/VR_Hands_CoEmb",
+    "tags": "HMD, Android",
     "demoGif": "assets/VR_Hands_CoEmbDemo.gif"
   },
   {
@@ -57,6 +62,7 @@
     "androidUrl": "https://github.zhaw.ch/IMMERSE/AI-Scene-Generator/releases/download/Android/build_v1.apk",
     "web": "",
     "repoUrl": "https://github.zhaw.ch/IMMERSE/AI-Scene-Generator",
+    "tags": "HMD, Android",
     "demoGif": "assets/AI-Scene-GeneratorDemo.gif"
   },
   {
@@ -67,6 +73,7 @@
     "androidUrl": "",
     "web": "https://github.zhaw.ch/pages/IMMERSE/AntExplorer/",
     "repoUrl": "https://github.zhaw.ch/IMMERSE/AntExplorer",
+    "tags": "Display, macOS, Windows, Web",
     "demoGif": "assets/AntExplorerDemo.gif"
   },
   {
@@ -77,6 +84,7 @@
     "androidUrl": "",
     "web": "",
     "repoUrl": "https://github.zhaw.ch/IMMERSE/3DViewer",
+    "tags": "Display, Windows",
     "demoGif": "assets/3DViewerDemo.gif"
   }
 ]
