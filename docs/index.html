@@ -37,7 +37,7 @@
 
     .wrap {
       max-width: 100%;
-      margin: 48px 80px;
+      margin: 0 80px;
       padding: 0
     }
 
@@ -66,7 +66,6 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      height: 580px;
       box-shadow: var(--shadow-md);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
@@ -105,13 +104,15 @@
     .card.list-view {
       border: 1px solid #e5e7eb;
       padding: 32px;
-      height: auto;
-      overflow: visible;
+      height: 280px;
+      overflow: hidden;
       margin-bottom: 24px;
       border-radius: 20px;
       background: var(--card);
       box-shadow: var(--shadow-md);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
     }
 
     .card.list-view:hover {
@@ -122,6 +123,33 @@
 
     .card.list-view:last-child {
       margin-bottom: 0;
+    }
+
+    /* Consistent text height in list view */
+    .card.list-view p {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.5;
+      max-height: calc(1.5em * 3);
+      margin-bottom: 16px;
+    }
+
+    /* Two-column layout for list view on wide screens */
+    .list-view-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 1200px) {
+      .list-view-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .card-preview {
@@ -473,22 +501,76 @@
     h3 {
       margin: 0 0 32px;
       font-size: 20px;
-      color: var(--muted);
-      font-weight: 500;
+      font-weight: 600;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .description-section {
-      margin-bottom: 48px;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff7eb3 100%);
+      position: relative;
+      width: 100vw;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      min-height: 500px;
+      overflow: visible;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 0 120px 0;
+      margin-top: 0;
+      margin-bottom: 80px;
+    }
+
+    .description-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3cdefs%3e%3cpattern id='wave' x='0' y='0' width='200' height='100' patternUnits='userSpaceOnUse'%3e%3cpath d='M0,50 Q50,10 100,50 T200,50 L200,100 L0,100 Z' fill='rgba(255,255,255,0.1)'/%3e%3c/pattern%3e%3c/defs%3e%3crect width='100%25' height='100%25' fill='url(%23wave)'/%3e%3c/svg%3e");
+      opacity: 0.4;
+    }
+
+    .description-section::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z' fill='%23f8fafc'/%3E%3C/svg%3E") no-repeat center bottom;
+      background-size: 100% 100%;
+    }
+
+    .cards-section {
+      margin-top: 64px;
     }
 
     .description-content {
-      display: flex;
-      align-items: center;
-      gap: 60px;
-      padding: 0 20px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 60px;
+      margin: 0 20px;
+      max-width: 800px;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      text-align: center;
+    }
+
+    .description-content p {
+      font-size: 1.25rem;
+      line-height: 1.8;
+      color: #4a5568;
+      margin: 0;
     }
 
     .description-text-container {
@@ -738,9 +820,9 @@
     }
 
     .filter-tag.active {
-      background: var(--bd);
+      background: var(--gradient);
       color: white;
-      border-color: var(--bd);
+      border-color: transparent;
     }
 
     .filter-actions {
@@ -764,6 +846,175 @@
     .filter-clear:hover {
       background: #d97706;
     }
+
+    /* Footer styles */
+    .footer {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px 0 15px 0;
+      margin-top: 80px;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+    }
+
+    .footer-left {
+      flex: 1;
+    }
+
+    .footer-center {
+      flex: 2;
+      display: flex;
+  justify-content: center;
+  gap: 60px;
+  align-items: flex-start;
+  text-align: center;
+    }
+
+    .footer-right {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .footer-section h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: white;
+      background: none;
+      -webkit-text-fill-color: white;
+    }
+
+    .footer-team {
+      text-align: left;
+    }
+
+    .footer-team a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-team a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .contact-person {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .contact-person img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .contact-info .name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .contact-info .email {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-info .email:hover {
+      color: white;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+
+    .contact-link:hover {
+      color: white;
+    }
+
+    .contact-link i {
+      font-size: 14px;
+      width: 16px;
+    }
+
+    .footer-logo {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .footer-logo img {
+      max-width: 70px;
+      height: auto;
+      margin-top: 8px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 40px;
+      color: white !important;
+    }
+
+    .footer-bottom p {
+      color: white !important;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 0 40px;
+        text-align: center;
+      }
+      
+      .contact-person {
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 
@@ -784,47 +1035,46 @@
   <div class="wrap">
     <div class="description-section">
       <div class="description-content">
-        <div class="description-text-container">
-          <h3>Project Portfolio</h3>
-          <p class="description-text">IMMERSE is committed to the digital transformation of education and training through immersive teaching and learning technologies. With a network of innovative partners from the education and technology sectors, structures and formats are being created to ensure the widespread implementation of XR- and AI-based methods in higher and vocational education, thereby sustainably improving their quality in the Canton of Zurich.</p>
-        </div>
-        <div class="description-logo">
-          <img src="assets/website/logo_immerse_black.png" alt="IMMERSE Logo" class="immerse-logo">
-        </div>
+        <img src="assets/website/logo_immerse_black.png" alt="IMMERSE Logo" class="immerse-logo" style="max-width: 200px; margin-bottom: 32px;">
+        <p class="description-text">IMMERSE is committed to the digital transformation of education and training through immersive teaching and learning technologies. With a network of innovative partners from the education and technology sectors, structures and formats are being created to ensure the widespread implementation of XR- and AI-based methods in higher and vocational education, thereby sustainably improving their quality in the Canton of Zurich.</p>
       </div>
     </div>
     
-    <!-- Filter dropdown -->
-    <div class="filter-container">
-      <button class="filter-btn" id="filterToggle">
-        <i class="fas fa-filter"></i>
-        <span>Filters</span>
-        <i class="fas fa-chevron-down" style="margin-left: auto;"></i>
-      </button>
-      <div class="filter-dropdown" id="filterDropdown">
-        <div class="filter-section">
-          <div class="filter-title">Display Type</div>
-          <div class="filter-options" id="displayFilters">
-            <div class="filter-tag" data-tag="Display">Display</div>
-            <div class="filter-tag" data-tag="HMD">HMD</div>
+    <div class="cards-section">
+      <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 48px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent;">Project Portfolio</h2>
+      
+      <!-- Filter dropdown -->
+      <div class="filter-container">
+        <button class="filter-btn" id="filterToggle">
+          <i class="fas fa-filter"></i>
+          <span>Filters</span>
+          <i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+        </button>
+        <div class="filter-dropdown" id="filterDropdown">
+          <div class="filter-section">
+            <div class="filter-title">Display Type</div>
+            <div class="filter-options" id="displayFilters">
+              <div class="filter-tag" data-tag="Display">Display</div>
+              <div class="filter-tag" data-tag="HMD">HMD</div>
+            </div>
           </div>
-        </div>
-        <div class="filter-section">
-          <div class="filter-title">Platform</div>
-          <div class="filter-options" id="platformFilters">
-            <div class="filter-tag" data-tag="Web">Web</div>
-            <div class="filter-tag" data-tag="Windows">Windows</div>
-            <div class="filter-tag" data-tag="macOS">macOS</div>
-            <div class="filter-tag" data-tag="Android">Android</div>
+          <div class="filter-section">
+            <div class="filter-title">Platform</div>
+            <div class="filter-options" id="platformFilters">
+              <div class="filter-tag" data-tag="Web">Web</div>
+              <div class="filter-tag" data-tag="Windows">Windows</div>
+              <div class="filter-tag" data-tag="macOS">macOS</div>
+              <div class="filter-tag" data-tag="Android">Android</div>
+            </div>
           </div>
-        </div>
-        <div class="filter-actions">
-          <button class="filter-clear" id="clearFilters">Clear All</button>
+          <div class="filter-actions">
+            <button class="filter-clear" id="clearFilters">Clear All</button>
+          </div>
         </div>
       </div>
+      
+      <div id="grid" class="grid"></div>
     </div>
-    
-    <div id="grid" class="grid"></div>
   </div>
   <script>
     // Function to create a static version of a GIF by drawing it on canvas
@@ -1025,7 +1275,7 @@
     }
 
     function renderListView(items) {
-      grid.className = "";
+      grid.className = "list-view-grid";
       grid.innerHTML = "";
       items.forEach(d => {
         const el = document.createElement("section");
@@ -1041,6 +1291,7 @@
             ${d.web ? `<a class="btn" href="${d.web}" target="_blank" rel="noopener"><i class="fas fa-globe"></i><span class="btn-text">Web</span></a>` : ""}
             ${d.macUrl ? `<a class="btn" href="${d.macUrl}" target="_blank" rel="noopener"><i class="fab fa-apple"></i><span class="btn-text">macOS</span></a>` : ""}
             ${d.winUrl ? `<a class="btn" href="${d.winUrl}" target="_blank" rel="noopener"><i class="fab fa-windows"></i><span class="btn-text">Windows</span></a>` : ""}
+            ${d.androidUrl ? `<a class="btn" href="${d.androidUrl}" target="_blank" rel="noopener"><i class="fab fa-android"></i><span class="btn-text">Android</span></a>` : ""}
             ${d.repoUrl ? `<a class="btn" href="${d.repoUrl}" target="_blank" rel="noopener"><i class="fab fa-github"></i><span class="btn-text">Git</span></a>` : ""}
           </div>
         `;
@@ -1148,6 +1399,7 @@
           document.getElementById("listViewBtn").classList.add("active");
           document.getElementById("cardViewBtn").classList.remove("active");
           updateFilterDisplay();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       });
       document.getElementById("cardViewBtn").addEventListener("click", () => {
@@ -1157,12 +1409,75 @@
           document.getElementById("cardViewBtn").classList.add("active");
           document.getElementById("listViewBtn").classList.remove("active");
           updateFilterDisplay();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       });
     }).catch(e => {
       grid.innerHTML = `<div class="card"><div class="card-content"><p>Failed to load data: ${e}</p></div></div>`;
     });
   </script>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <!-- Team Information -->
+      <div class="footer-left">
+        <div class="footer-section footer-team">
+          <h3>Visual Intelligence & Applications</h3>
+          <a href="https://www.zhaw.ch/de/engineering/institute-zentren/idp/visual-intelligence-and-applications" target="_blank">
+            Visit our team page
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="footer-center">
+        <div class="footer-section footer-contact">
+          <h3>Contact</h3>
+          <div class="contact-person">
+            <img src="assets/website/zobaer_logo.webp" alt="Zobaer Ahmed">
+            <div class="contact-info">
+              <div class="name">Zobaer Ahmed</div>
+              <div class="contact-links">
+                <a href="mailto:ahmd@zhaw.ch" class="contact-link">
+                  <i class="fas fa-envelope"></i>
+                  ahmd@zhaw.ch
+                </a>
+                <a href="https://www.linkedin.com/in/zobaer-ahmed-salam-424731234/" target="_blank" class="contact-link">
+                  <i class="fab fa-linkedin"></i>
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="contact-person">
+            <img src="assets/website/matthias_logo.webp" alt="Matthias Karst">
+            <div class="contact-info">
+              <div class="name">Matthias Karst</div>
+              <div class="contact-links">
+                <a href="mailto:karm@zhaw.ch" class="contact-link">
+                  <i class="fas fa-envelope"></i>
+                  karm@zhaw.ch
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ZHAW Logo -->
+      <div class="footer-right">
+        <div class="footer-section footer-logo">
+          <h3>Zurich University of Applied Sciences</h3>
+          <img src="assets/website/zhaw_sw_neg.png" alt="ZHAW Logo">
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 IMMERSE - Digital Transformation in Education</p>
+    </div>
+  </footer>
 </body>
 
 </html>
