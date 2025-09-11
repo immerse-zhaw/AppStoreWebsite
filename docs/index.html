@@ -533,7 +533,9 @@
       left: 0;
       right: 0;
       bottom: 0;
+      /*
       background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3cdefs%3e%3cpattern id='wave' x='0' y='0' width='200' height='100' patternUnits='userSpaceOnUse'%3e%3cpath d='M0,50 Q50,10 100,50 T200,50 L200,100 L0,100 Z' fill='rgba(255,255,255,0.1)'/%3e%3c/pattern%3e%3c/defs%3e%3crect width='100%25' height='100%25' fill='url(%23wave)'/%3e%3c/svg%3e");
+      */
       opacity: 0.4;
     }
 
@@ -1158,8 +1160,7 @@
           <div class="card-content">
             <h2>${d.name}</h2>
             <div class="card-description">
-              <p class="truncated">${d.blurb || "No description available"}</p>
-              <span class="expand-btn">Read more...</span>
+              <p class="truncated two-lines">${d.blurb || "No description available"}</p>
             </div>
             <div class="links">
               ${d.web ? `<a class="btn" href="${d.web}" target="_blank" rel="noopener"><i class="fas fa-globe"></i><span class="btn-text">Web</span></a>` : ""}
@@ -1171,82 +1172,7 @@
           </div>
         `;
 
-        // Add text truncation functionality with dynamic line detection
-        const description = el.querySelector('.card-description');
-        const paragraph = description.querySelector('p');
-        const expandBtn = description.querySelector('.expand-btn');
-        const originalText = d.blurb || "No description available";
-        
-        // Ensure text is always visible and HTML tags are interpreted
-        paragraph.innerHTML = originalText;
-        
-        // Check if text is long enough to need truncation (more sensitive)
-        if (originalText.length > 80 || originalText.split(' ').length > 12) {
-          description.classList.add('has-overflow');
-          paragraph.classList.add('truncated');
-          
-          // Check available space to determine optimal number of lines
-          setTimeout(() => {
-            const cardContent = el.querySelector('.card-content');
-            const cardContentHeight = cardContent.offsetHeight;
-            const titleHeight = el.querySelector('h2').offsetHeight;
-            const linksContainer = el.querySelector('.links');
-            const linksHeight = linksContainer.offsetHeight;
-            const expandBtnHeight = expandBtn.offsetHeight;
-            
-            // Calculate available space for text (minus padding and margins)
-            const usedSpace = titleHeight + linksHeight + expandBtnHeight + 40; // 40px for margins/padding
-            const availableTextSpace = cardContentHeight - usedSpace;
-            const lineHeight = 1.4 * 14; // 14px font size * 1.4 line height
-            
-            // Determine optimal number of lines based on available space
-            const maxPossibleLines = Math.floor(availableTextSpace / lineHeight);
-            
-            if (maxPossibleLines >= 4) {
-              paragraph.classList.add('four-lines');
-            } else if (maxPossibleLines >= 3) {
-              paragraph.classList.add('three-lines');
-            }
-            // Otherwise keep default 2 lines
-          }, 0);
-          
-          let isExpanded = false;
-          
-          expandBtn.addEventListener('click', () => {
-            const cardContent = el.querySelector('.card-content');
-            if (!isExpanded) {
-              paragraph.classList.remove('truncated', 'three-lines', 'four-lines');
-              description.classList.add('expanded');
-              cardContent.classList.add('expanded');
-              expandBtn.textContent = 'Show less';
-              isExpanded = true;
-            } else {
-              paragraph.classList.add('truncated');
-              // Re-calculate optimal lines when collapsing
-              const cardContentHeight = cardContent.offsetHeight;
-              const titleHeight = el.querySelector('h2').offsetHeight;
-              const linksHeight = el.querySelector('.links').offsetHeight;
-              const expandBtnHeight = expandBtn.offsetHeight;
-              const usedSpace = titleHeight + linksHeight + expandBtnHeight + 40;
-              const availableTextSpace = cardContentHeight - usedSpace;
-              const lineHeight = 1.4 * 14;
-              const maxPossibleLines = Math.floor(availableTextSpace / lineHeight);
-              
-              if (maxPossibleLines >= 4) {
-                paragraph.classList.add('four-lines');
-              } else if (maxPossibleLines >= 3) {
-                paragraph.classList.add('three-lines');
-              }
-              
-              description.classList.remove('expanded');
-              cardContent.classList.remove('expanded');
-              expandBtn.textContent = 'Read more...';
-              isExpanded = false;
-            }
-          });
-        } else {
-          paragraph.classList.remove('truncated');
-        }
+  // No expand/collapse functionality. Enforce 2-line truncation with CSS.
         // Add hover and click effects for GIF
         const img = el.querySelector('.card-preview img');
         const preview = el.querySelector('.card-preview');

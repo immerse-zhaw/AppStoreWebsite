@@ -1,7 +1,7 @@
 [
   {
     "name": "BracesNotebook",
-    "blurb": "<strong>Braces Notebook</strong> is an interactive Unity project where you can explore orthodontics in a playful way.\nYou’ll experiment with adding brackets and rubber bands to a tooth, and observe how it responds to the applied forces.",
+    "blurb": "Explore orthodontics interactively in Unity. Add brackets and rubber bands to a tooth, then observe how it responds to applied forces in a playful simulation.",
     "macUrl": "https://github.zhaw.ch/IMMERSE/BracesNotebook/releases/download/v1.0.0/BracesNotebookOSX.app.zip",
     "winUrl": "https://github.zhaw.ch/IMMERSE/BracesNotebook/releases/download/v1.0.0/BracesNotebookWin.zip",
     "androidUrl": "",
@@ -23,7 +23,7 @@
   },
   {
     "name": "HeartrateMonitor",
-    "blurb": "A Unity-based heart rate visualization app for <strong>Windows</strong> and <strong>macOS</strong>.  \nIt connects to <strong>Polar heart rate straps</strong> over Bluetooth Low Energy (BLE).",
+    "blurb": "Visualize heart rate data with a HR sensor via BLE connection. Connect Polar heart rate straps via Bluetooth and monitor live heart rate with a clear interactive display.",
     "macUrl": "https://github.zhaw.ch/IMMERSE/HeartrateMonitor/releases/download/v1.0.0/HeartrateMonitorOSX.app.zip",
     "winUrl": "https://github.zhaw.ch/IMMERSE/HeartrateMonitor/releases/download/v1.0.0/HeartrateMonitorWin.zip",
     "androidUrl": "",
@@ -34,7 +34,7 @@
   },
   {
     "name": "VirtualCoEmbodimentFullBody",
-    "blurb": "<strong>Virtual Co-Embodiment (Full Body)</strong> is a Unity project that enables a teacher and one or more students to connect and control a shared full-body avatar in real time.",
+    "blurb": "Connect teachers and students in Unity to control a shared full-body avatar in real time. Enables collaborative learning with co-embodied movement and feedback.",
     "macUrl": "https://github.zhaw.ch/IMMERSE/VirtualCoEmbodimentFullBody/releases/download/v1.0.0/VirtualCoEmbodimentFullBodyOSX.app.zip",
     "winUrl": "https://github.zhaw.ch/IMMERSE/VirtualCoEmbodimentFullBody/releases/download/v1.0.0/VirtualCoEmbodimentWin.zip",
     "androidUrl": "",
@@ -45,7 +45,7 @@
   },
   {
     "name": "VR_Hands_CoEmb",
-    "blurb": "Virtual Co-Embodiment (Hand Tracking) is a Unity project that enables a teacher and one or more students to connect and interact with shared hand models in real time using Oculus Quest hand tracking.",
+    "blurb": "Collaborative hand tracking in Unity for Oculus Quest. Teachers and students interact with co-embodied hand models in real time, enhancing immersive group activities.",
     "macUrl": "",
     "winUrl": "",
     "androidUrl": "https://github.zhaw.ch/IMMERSE/VR_Hands_CoEmb/releases/download/v1.0.0/Hand_CoEmb_newUI_220825_Android.apk",
@@ -56,7 +56,7 @@
   },
   {
     "name": "AI-Scene-Generator",
-    "blurb": "A VR tool for creating 3D scenes and games using AI generation without programming knowledge.",
+    "blurb": "Create 3D scenes and games in VR using AI generation. No programming required, design interactive environments quickly and intuitively with smart automation.",
     "macUrl": "",
     "winUrl": "",
     "androidUrl": "https://github.zhaw.ch/IMMERSE/AI-Scene-Generator/releases/download/Android/build_v1.apk",
@@ -67,7 +67,7 @@
   },
   {
     "name": "AntExplorer",
-    "blurb": "<strong>Ant Explorer</strong> is an educational game prototype where you’ll discover the world of ants through interactive puzzles and exploration. The game puts you in the shoes of a researcher, exploring an anthill. A small robot allows you to dive into the heart of an anthill, learn facts about ant biology and social structures, and solve riddles that reveal how ants communicate, defend their colony, and care for their brood. Enjoy your journey through the tunnels, chambers, and secrets of the anthill as you gain a deeper appreciation for one of nature’s most remarkable societies!",
+    "blurb": "Discover the world of ants through interactive puzzles and exploration. Dive into an anthill, learn ant biology, and solve riddles as a researcher in a playful game.",
     "macUrl": "https://github.zhaw.ch/IMMERSE/AntExplorer/releases/download/v1.0.0/AntExplorerOSX.app.zip",
     "winUrl": "https://github.zhaw.ch/IMMERSE/AntExplorer/releases/download/v1.0.0/AntExplorerWin.zip",
     "androidUrl": "",
@@ -78,7 +78,7 @@
   },
   {
     "name": "3DViewer",
-    "blurb": "This project demonstrates a simple 3D viewer in Unity with support for stereoscopic rendering. It can be used to explore models interactively and showcase stereo 3D.",
+    "blurb": "Explore 3D models interactively in Unity with stereoscopic rendering. Ideal for showcasing stereo 3D and examining models from multiple perspectives.",
     "macUrl": "",
     "winUrl": "https://github.zhaw.ch/IMMERSE/3DViewer/releases/download/v1.0.0/3DViewerWin.zip",
     "androidUrl": "",
