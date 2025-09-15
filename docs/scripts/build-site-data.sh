@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # -------- Config --------
-API_BASE="${API_BASE:-https://github.zhaw.ch/api/v3}"
+API_BASE="${API_BASE:-https://api.github.com}"
 PROJECTS_FILE="${PROJECTS_FILE:-docs/projects.json}"
 OUT_FILE="${OUT_FILE:-docs/site-data.json}"
 OWNER_DEFAULT="${OWNER_DEFAULT:-}"   # optional: set to your org, e.g. OWNER_DEFAULT=IMMERSE
@@ -65,6 +65,7 @@ build_items() {
     owner="$(jq -r '(.owner // empty)' <<<"$row")"
     repo_raw="$(jq -r '.repo' <<<"$row")"
     web="$(jq -r '(.web // "")' <<<"$row")"
+    tags="$(jq -r '(.tags // "")' <<<"$row")"
 
     if [[ "$repo_raw" == */* ]]; then
       owner="${repo_raw%%/*}"
@@ -131,7 +132,8 @@ build_items() {
       --arg web "$web" \
       --arg repo "$repoUrl" \
       --arg demo "$demoGif" \
-      '{name:$name, blurb:$blurb, macUrl:$mac, winUrl:$win, androidUrl:$android, web:$web, repoUrl:$repo, demoGif:$demo}'
+      --arg tags "$tags" \
+      '{name:$name, blurb:$blurb, macUrl:$mac, winUrl:$win, androidUrl:$android, web:$web, repoUrl:$repo, tags:$tags, demoGif:$demo}'
   done | jq -s '.'
 }
 
