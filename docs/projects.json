@@ -1,10 +1,10 @@
 [
-  { "owner": "immerse-zhaw", "repo": "BracesNotebook", "web": "https://github.zhaw.ch/pages/IMMERSE/BracesNotebook/", "tags": "Display, macOS, Windows, Web" },
+  { "owner": "immerse-zhaw", "repo": "BracesNotebook", "web": "https://immerse-zhaw.github.io/BracesNotebook/", "tags": "Display, macOS, Windows, Web" },
   { "owner": "immerse-zhaw", "repo": "AnimationRigging", "tags": "Display, macOS, Windows" },
   { "owner": "immerse-zhaw", "repo": "HeartrateMonitor", "tags": "Display, macOS, Windows" },
   { "owner": "immerse-zhaw", "repo": "VirtualCoEmbodimentFullBody", "tags": "macOS, Windows" },
   { "owner": "immerse-zhaw", "repo": "VirtualCoEmbodimentHands", "tags": "HMD, Android" },
   { "owner": "immerse-zhaw", "repo": "AI-Scene-Generator", "tags": "HMD, Android" },
-  { "owner": "immerse-zhaw", "repo": "AntExplorer", "web": "https://github.zhaw.ch/pages/IMMERSE/AntExplorer/", "tags": "Display, macOS, Windows, Web" },
+  { "owner": "immerse-zhaw", "repo": "AntExplorer", "web": "https://immerse-zhaw.github.io/AntExplorer/", "tags": "Display, macOS, Windows, Web" },
   { "owner": "immerse-zhaw", "repo": "3DViewer", "tags": "Display, Windows" }
 ]
